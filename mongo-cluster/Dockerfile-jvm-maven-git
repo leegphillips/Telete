@@ -1,0 +1,11 @@
+FROM openjdk:latest
+
+# better to build externally and drop to Docker
+RUN  \
+  export DEBIAN_FRONTEND=noninteractive && \
+  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y wget curl git maven && \
+  git clone https://github.com/spring-guides/gs-spring-boot-docker.git
+
