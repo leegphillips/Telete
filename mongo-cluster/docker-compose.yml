@@ -24,3 +24,25 @@ services:
              - 27017
             restart: always
             entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+        portainer:
+            container_name: portainer
+            image: portainer/portainer
+            ports:
+             - "9000:9000"
+            command: -H unix:///var/run/docker.sock
+            volumes:
+             - /var/run/docker.sock:/var/run/docker.sock
+             - portainer_data:/data
+        application:
+            hostname: application
+            container_name: localapplication
+            build:
+                context: .
+                dockerfile: Dockerfile-jvm-maven-git
+            ports:
+             - "8080:8080"
+            working_dir: /gs-spring-boot-docker/complete
+            entrypoint: ["/usr/bin/mvn", "spring-boot:run", "-DskipTests"]
+
+volumes:
+  portainer_data:
