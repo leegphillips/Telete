@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.leegphillips</groupId>
-	<artifactId>frontend</artifactId>
+	<artifactId>rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>frontend</name>
+	<name>rest</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -47,7 +47,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+			<plugin>
+			     <groupId>com.spotify</groupId>
+			     <artifactId>docker-maven-plugin</artifactId>
+		         <version>1.1.1</version>
+			     <configuration>
+				      <imageName>leegphillips/rest</imageName>
+				      <baseImage>openjdk:alpine</baseImage>
+				      <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+				      <resources>
+						  <resource>
+				  		      <targetPath>/</targetPath>
+						      <directory>${project.build.directory}</directory>
+						      <include>${project.build.finalName}.jar</include>
+						  </resource>
+				      </resources>
+			     </configuration>
+		    </plugin>
+	    </plugins>
 	</build>
 
 

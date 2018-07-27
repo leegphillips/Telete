@@ -6,24 +6,30 @@ services:
             image: mongo:latest
             expose:
              - 27017
+            ports:
+             - "28017:28017"
             restart: always
-            entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
         mongo2:
             hostname: mongo2
             container_name: localmongo2
             image: mongo:latest
             expose:
              - 27017
+            ports:
+             - "28018:28017"
             restart: always
-            entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
         mongo3:
             hostname: mongo3
             container_name: localmongo3
             image: mongo:latest
             expose:
              - 27017
+            ports:
+             - "28019:28017"
             restart: always
-            entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
         portainer:
             container_name: portainer
             image: portainer/portainer
@@ -34,15 +40,11 @@ services:
              - /var/run/docker.sock:/var/run/docker.sock
              - portainer_data:/data
         application:
-            hostname: application
-            container_name: localapplication
-            build:
-                context: .
-                dockerfile: Dockerfile-jvm-maven-git
+            hostname: rest-application
+            container_name: rest
+            image: leegphillips/rest
             ports:
              - "8080:8080"
-            working_dir: /gs-spring-boot-docker/complete
-            entrypoint: ["/usr/bin/mvn", "spring-boot:run", "-DskipTests"]
 
 volumes:
   portainer_data:
