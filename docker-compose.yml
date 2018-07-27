@@ -9,7 +9,7 @@ services:
             ports:
              - "28017:28017"
             restart: always
-            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rsTelete"]
         mongo2:
             hostname: mongo2
             container_name: localmongo2
@@ -19,7 +19,7 @@ services:
             ports:
              - "28018:28017"
             restart: always
-            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rsTelete"]
         mongo3:
             hostname: mongo3
             container_name: localmongo3
@@ -29,7 +29,7 @@ services:
             ports:
              - "28019:28017"
             restart: always
-            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+            entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rsTelete"]
         portainer:
             container_name: portainer
             image: portainer/portainer
@@ -45,6 +45,10 @@ services:
             image: leegphillips/rest
             ports:
              - "8080:8080"
+            depends_on:
+             - mongo1
+             - mongo2
+             - mongo3
 
 volumes:
   portainer_data:

@@ -1,7 +1,7 @@
 <!-- run on any node via mongo shell after initial create -->
 
 config = {
-  	"_id" : "rs0",
+  	"_id" : "rsTelete",
   	"members" : [
   		{
   			"_id" : 0,
